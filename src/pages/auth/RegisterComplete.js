@@ -53,20 +53,24 @@ const RegisterComplete = ({history}) => {
     }
 
     const completeRegistrationForm = () => <form onSubmit={handleSubmit}>
-        <input 
-        type='email' 
-        className='form-control' 
-        value={email}
-        disabled
-        />
-        <input 
-        type='password' 
-        className='form-control' 
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Password"
-        autoFocus
-        />
+    <div className="form-group">
+            <input 
+            type='email' 
+            className='form-control' 
+            value={email}
+            disabled
+            />
+        </div>
+        <div className="form-group">
+            <input 
+            type='password' 
+            className='form-control' 
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
+            autoFocus
+            />
+        </div>
         <br />
         <button type='submit' className='btn btn-raised'>Complete Registration</button>
     </form>
