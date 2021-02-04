@@ -15,6 +15,40 @@ const RegisterComplete = ({history}) => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // validation
+        if (!email || !password) {
+            toast.error('Email and password is required');
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
+
+        try {
+            const result = await auth.signInWithEmailLink(
+                email, 
+                window.location.href
+            );
+            if (result.user.emailVerified) {
+                // remove email from localStorage
+                window.localStorage.removeItem('emailForRegistration');
+                // get user id token
+                let user = auth.currentUser;
+                await user.updatePassword(password);
+                const idTokenResult = await user.getIdTokenResult();
+                // redux store
+                console.log('user: ', user, 'idTokeResult: ', idTokenResult);
+                // redirect
+                history.push('/');
+            }
+            
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
         
     }
 
@@ -41,7 +75,7 @@ const RegisterComplete = ({history}) => {
         <div className='container p-5'>
             <div className='row'>
                 <div className='col-md-6 offset-md-3'>
-                    <h4>Register Complete</h4>
+                    <h4>Complete Registration</h4>
                     
                     {completeRegistrationForm()}
                 </div>
