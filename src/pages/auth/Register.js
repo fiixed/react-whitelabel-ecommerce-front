@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import env from "react-dotenv";
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 
@@ -10,8 +9,9 @@ const Register = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL);
         const config = {
-            url: env.REGISTER_REDIRECT_URL,
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
             handleCodeInApp: true
         }
 
@@ -33,6 +33,7 @@ const Register = () => {
         onChange={e => setEmail(e.target.value)}
         autoFocus
         />
+        <br />
         <button type='submit' className='btn btn-raised'>Register</button>
     </form>
 

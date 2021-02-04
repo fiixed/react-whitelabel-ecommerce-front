@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Header from './components/nav/Header'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
 
 
@@ -19,8 +20,9 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/register' component={Register}/>
+        <Route exact path='/register/complete' component={RegisterComplete}/>
       </Switch>
     </>
   )
