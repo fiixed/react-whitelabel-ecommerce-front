@@ -6,6 +6,7 @@ import {
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+
 import Header from './components/nav/Header'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
