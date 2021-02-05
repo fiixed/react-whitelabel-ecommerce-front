@@ -23,6 +23,7 @@ const App = () => {
 
   // to check firebase auth state
   useEffect(() => {
+    
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
@@ -39,6 +40,7 @@ const App = () => {
     });
     // cleanup
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
