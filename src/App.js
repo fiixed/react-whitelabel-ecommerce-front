@@ -13,12 +13,16 @@ import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
 import ForgotPassword from './pages/auth/ForgotPassword'
+import History from './pages/user/History'
+import Password from './pages/user/Password'
+import Wishlist from './pages/user/Wishlist'
+import UserRoute from './components/routes/UserRoute'
+import AdminRoute from './components/routes/AdminRoute'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
 import { currentUser } from './functions/auth'
-
-
 
 const App = () => {
   const dispatch = useDispatch();
@@ -57,10 +61,14 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/register' component={Register}/>
-        <Route exact path='/register/complete' component={RegisterComplete}/>
-        <Route exact path='/forgot/password' component={ForgotPassword}/>
+        <Route path='/login' component={Login}/>
+        <Route path='/register' component={Register}/>
+        <Route path='/register/complete' component={RegisterComplete}/>
+        <Route path='/forgot/password' component={ForgotPassword}/>
+        <UserRoute path='/user/history' component={History}/>
+        <UserRoute path='/user/password' component={Password}/>
+        <UserRoute path='/user/wishlist' component={Wishlist}/>
+        <AdminRoute path='/admin/dashboard' component={AdminDashboard}/>
       </Switch>
       
     </>
