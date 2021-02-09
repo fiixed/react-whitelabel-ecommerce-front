@@ -23,6 +23,8 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
 import { currentUser } from './functions/auth'
+import CategoryCreate from './pages/admin/category/CategoryCreate'
+import CategoryUpdate from './pages/admin/category/CategoryUpdate'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -61,14 +63,16 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
-        <Route path='/register/complete' component={RegisterComplete}/>
-        <Route path='/forgot/password' component={ForgotPassword}/>
-        <UserRoute path='/user/history' component={History}/>
-        <UserRoute path='/user/password' component={Password}/>
-        <UserRoute path='/user/wishlist' component={Wishlist}/>
-        <AdminRoute path='/admin/dashboard' component={AdminDashboard}/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/register' component={Register}/>
+        <Route exact path='/register/complete' component={RegisterComplete}/>
+        <Route exact path='/forgot/password' component={ForgotPassword}/>
+        <UserRoute exact path='/user/history' component={History}/>
+        <UserRoute exact path='/user/password' component={Password}/>
+        <UserRoute exact path='/user/wishlist' component={Wishlist}/>
+        <AdminRoute exact path='/admin/dashboard' component={AdminDashboard}/>
+        <AdminRoute exact path='/admin/category' component={CategoryCreate}/>
+        <AdminRoute exact path='/admin/category/:slug' component={CategoryUpdate}/>
       </Switch>
       
     </>
