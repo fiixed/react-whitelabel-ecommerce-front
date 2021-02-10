@@ -17,6 +17,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  // searching/filtering
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     loadCategories();
@@ -64,6 +66,13 @@ const CategoryCreate = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    e.preventDefault()
+    setKeyword(e.target.value.toLowerCase());
+  }
+
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -77,8 +86,9 @@ const CategoryCreate = () => {
             <h4>Create category</h4>
           )}
           <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+          <input type='search' placeholder='Filter' value={keyword} onChange={handleSearchChange} className='form-control mb-4' />
           <hr />
-          {categories.map((c) => (
+          {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
               <span
