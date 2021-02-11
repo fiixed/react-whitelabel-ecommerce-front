@@ -28,8 +28,7 @@ const SubCreate = () => {
   const loadCategories = () =>
     getCategories().then((c) => setCategories(c.data));
 
-    const loadSubs = () =>
-    getSubs().then((s) => setSubs(s.data));
+  const loadSubs = () => getSubs().then((s) => setSubs(s.data));
 
   const handleSubmit = (e) => {
     e.preventDefault();
