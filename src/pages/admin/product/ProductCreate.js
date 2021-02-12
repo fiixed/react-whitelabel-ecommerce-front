@@ -25,6 +25,7 @@ const initialState = {
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState);
     const [subOptions, setSubOptions] = useState([]);
+    const [showSub, setShowSub] = useState(false);
   
     // redux
     const { user } = useSelector((state) => ({ ...state }));
@@ -60,12 +61,13 @@ const ProductCreate = () => {
     const handleCategoryChange = (e) => {
         e.preventDefault();
         console.log('CLICKED CATEGORY', e.target.value);
-        setValues({ ...values, category: e.target.value });
+        setValues({ ...values, subs: [], category: e.target.value });
         getCategorySubs(e.target.value)
         .then(res => {
             console.log('SUB OPTIONS ON CATEGORY CLICK', res);
             setSubOptions(res.data);
-        })
+        });
+        setShowSub(true);
     };
   
     return (
@@ -82,8 +84,11 @@ const ProductCreate = () => {
             <ProductCreateForm
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
+                setValues={setValues}
                 handleCategoryChange={handleCategoryChange}
                 values={values}
+                subOptions={subOptions}
+                showSub={showSub}
 
              />
             
