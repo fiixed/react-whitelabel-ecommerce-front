@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getCategorySubs } from "../../../functions/category";
+import FileUpload from "../../../components/forms/FileUpload";
 
 const initialState = {
   title: "",
@@ -71,6 +72,7 @@ const ProductCreate = () => {
     };
   
     return (
+      
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-2">
@@ -80,6 +82,9 @@ const ProductCreate = () => {
           <div className="col-md-10">
             <h4>Product create</h4>
             <hr />
+            <div className='p-3'>
+                <FileUpload />
+            </div>
 
             <ProductCreateForm
                 handleSubmit={handleSubmit}
