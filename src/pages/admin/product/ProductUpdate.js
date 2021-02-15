@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { getProduct } from "../../../functions/product";
+import { getProduct, updateProduct } from "../../../functions/product";
 import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -23,7 +23,7 @@ const initialState = {
   brand: "",
 };
 
-const ProductUpdate = ({ match }) => {
+const ProductUpdate = ({ match, history }) => {
     // state
     const [values, setValues] = useState(initialState);
     const [categories, setCategories] = useState([]);
@@ -39,6 +39,7 @@ const ProductUpdate = ({ match }) => {
     useEffect(() => {
       loadProduct();
       loadCategories();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   
     const loadProduct = () => {
@@ -53,7 +54,7 @@ const ProductUpdate = ({ match }) => {
         // 3 prepare array of sub ids to show as default sub values in antd Select
         let arr = [];
         p.data.subs.map((s) => {
-          arr.push(s._id);
+          return arr.push(s._id);
         });
         console.log("ARR", arr);
         setArrayOfSubs((prev) => arr); // required for ant design select to work
@@ -66,10 +67,25 @@ const ProductUpdate = ({ match }) => {
         setCategories(c.data);
       });
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      //
-    };
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+    
+        values.subs = arrayOfSubs;
+        values.category = selectedCategory ? selectedCategory : values.category;
+    
+        updateProduct(slug, values, user.token)
+          .then((res) => {
+            setLoading(false);
+            toast.success(`"${res.data.title}" is updated`);
+            history.push("/admin/products");
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            toast.error(err.response.data.err);
+          });
+      };
   
     const handleChange = (e) => {
       setValues({ ...values, [e.target.name]: e.target.value });
