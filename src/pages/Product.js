@@ -10,7 +10,7 @@ const Product = ({ match }) => {
   useEffect(() => {
     loadSingleProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  }, [slug]);  // will run when the slug changes
 
   const loadSingleProduct = () =>
     getProduct(slug).then((res) => setProduct(res.data));
