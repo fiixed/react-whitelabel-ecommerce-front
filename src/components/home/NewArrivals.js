@@ -47,9 +47,9 @@ const NewArrivals = () => {
       <div className="row">
         <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
           <Pagination
-            current={page}
-            total={(productsCount / 3) * 10}
-            onChange={(value) => setPage(value)}
+            current={page}  // current page - default is page 1
+            total={(productsCount / 3) * 10}  // products total / 3 (3 per page) * max pagination links (10)
+            onChange={(value) => setPage(value)} // on pagination click, setPage to new page number (ie, page 2 or 3)
           />
         </nav>
       </div>
