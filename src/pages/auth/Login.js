@@ -18,20 +18,30 @@ const Login = ({history}) => {
     const { user } = useSelector((state) => ({...state}));
 
     useEffect(() => {
-        if(user && user.token) history.push('/');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user])
+        let intended = history.location.state;
+        if (intended) {
+          return;
+        } else {
+          if (user && user.token) history.push("/");
+        }
+      }, [user, history]);
 
 
     const dispatch = useDispatch();
 
     const roleBasedRedirect = (res) => {
-        if (res.data.role === 'admin') {
-            history.push('/admin/dashboard');
+        // check if intended
+        let intended = history.location.state;
+        if (intended) {
+          history.push(intended.from);
         } else {
-            history.push('/user/history');
+          if (res.data.role === "admin") {
+            history.push("/admin/dashboard");
+          } else {
+            history.push("/user/history");
+          }
         }
-    }
+      };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
