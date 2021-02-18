@@ -18,7 +18,7 @@ const RatingModal = ({ children }) => {
     } else {
       history.push({
         pathname: "/login",
-        state: { from: `/product/${slug}` },  // current page to bring user back once they login
+        state: { from: `/product/${slug}` },
       });
     }
   };

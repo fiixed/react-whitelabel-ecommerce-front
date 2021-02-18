@@ -20,7 +20,7 @@ const Login = ({history}) => {
     useEffect(() => {
         let intended = history.location.state;
         if (intended) {
-          return;
+          return; // break out of function
         } else {
           if (user && user.token) history.push("/");
         }

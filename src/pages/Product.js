@@ -1,24 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { getProduct } from "../functions/product";
+import { getProduct, productStar } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
+import { useSelector } from "react-redux";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
+  const [star, setStar] = useState(0);
+  // redux
+  const { user } = useSelector((state) => ({ ...state }));
 
   const { slug } = match.params;
 
   useEffect(() => {
     loadSingleProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);  // will run when the slug changes
+  }, [slug]);
+
+  useEffect(() => {
+    if (product.ratings && user) {
+      let existingRatingObject = product.ratings.find(
+        (ele) => ele.postedBy.toString() === user._id.toString()
+      );
+      existingRatingObject && setStar(existingRatingObject.star); // current user's star
+    }
+  });
 
   const loadSingleProduct = () =>
     getProduct(slug).then((res) => setProduct(res.data));
 
+  const onStarClick = (newRating, name) => {
+    setStar(newRating);
+    console.table(newRating, name);
+    productStar(name, newRating, user.token).then((res) => {
+      console.log("rating clicked", res.data);
+      loadSingleProduct(); // To show updated rating in real time
+    });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row pt-4">
-        <SingleProduct product={product} />
+        <SingleProduct
+          product={product}
+          onStarClick={onStarClick}
+          star={star}
+        />
       </div>
 
       <div className="row">
