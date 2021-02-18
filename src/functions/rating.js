@@ -9,14 +9,14 @@ export const showAverage = (p) => {
     // console.log("length", length);
 
     ratingsArray.map((r) => total.push(r.star));
-    let totalReduced = total.reduce((p, n) => p + n, 0);
-    // console.log("totalReduced", totalReduced);
+    let totalReduced = total.reduce((p, n) => p + n, 0);  // 0 is initial value, totalReduced gives us total of all star ratings
+    //console.log("totalReduced", totalReduced);
 
     let highest = length * 5;
     // console.log("highest", highest);
 
     let result = (totalReduced * 5) / highest;
-    // console.log("result", result);
+    //console.log("result", result);
 
     return (
       <div className="text-center pt-1 pb-3">

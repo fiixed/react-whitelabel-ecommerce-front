@@ -16,6 +16,7 @@ const Product = ({ match }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
+  // show current logged in users current rating and show 
   useEffect(() => {
     if (product.ratings && user) {
       let existingRatingObject = product.ratings.find(
@@ -30,7 +31,7 @@ const Product = ({ match }) => {
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
-    console.table(newRating, name);
+    //console.table(newRating, name);
     productStar(name, newRating, user.token).then((res) => {
       console.log("rating clicked", res.data);
       loadSingleProduct(); // To show updated rating in real time
