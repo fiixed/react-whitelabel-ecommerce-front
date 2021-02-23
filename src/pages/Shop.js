@@ -62,6 +62,7 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },  // removes existing search query from redux state
     });
+    setCategoryIds([]);
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);  // change bool every 300 ms to make fetchProducts call
