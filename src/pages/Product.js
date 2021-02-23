@@ -16,6 +16,7 @@ const Product = ({ match }) => {
 
   useEffect(() => {
     loadSingleProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const Product = ({ match }) => {
       );
       existingRatingObject && setStar(existingRatingObject.star); // current user's star
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   const loadSingleProduct = () => {

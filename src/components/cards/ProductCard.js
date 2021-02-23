@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   // destructure
-  const { images, title, description, slug } = product;
+  const { images, title, description, slug, price } = product;
   return (
     <>
       {product && product.ratings && product.ratings.length > 0 ? (
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
           <img
             src={images && images.length ? images[0].url : laptop}
             style={{ height: "150px", objectFit: "cover" }}
-            className="p-1"
+            className="p-1" alt='product'
           />
         }
         actions={[
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
         ]}
       >
         <Meta
-          title={title}
+          title={`${title} - $${price}`}
           description={`${description && description.substring(0, 40)}...`}
         />
       </Card>
