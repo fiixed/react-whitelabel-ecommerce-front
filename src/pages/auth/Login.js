@@ -33,7 +33,7 @@ const Login = ({history}) => {
         // check if intended
         let intended = history.location.state;
         if (intended) {
-          history.push(intended.from);
+          history.push(intended.from);  // take them from where they came from
         } else {
           if (res.data.role === "admin") {
             history.push("/admin/dashboard");
