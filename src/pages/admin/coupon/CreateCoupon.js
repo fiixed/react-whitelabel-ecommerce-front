@@ -34,7 +34,7 @@ const CreateCoupon = () => {
     createCoupon({ name, expiry, discount }, user.token)
       .then((res) => {
         setLoading(false);
-        loadAllCoupons(); // load all coupons
+        loadAllCoupons(); // update list of coupons with new coupon
         setName("");
         setDiscount("");
         setExpiry("");
@@ -48,7 +48,7 @@ const CreateCoupon = () => {
       setLoading(true);
       removeCoupon(couponId, user.token)
         .then((res) => {
-          loadAllCoupons(); // load all coupons
+          loadAllCoupons(); // update list of coupons after deletion of coupon
           setLoading(false);
           toast.error(`Coupon "${res.data.name}" deleted`);
         })
