@@ -30,7 +30,7 @@ const StripeCheckout = ({ history }) => {
 
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement),
+        card: elements.getElement(CardElement),  // value from card element in the form
         billing_details: {
           name: e.target.name.value,
         },
