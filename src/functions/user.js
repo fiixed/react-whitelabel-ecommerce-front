@@ -57,3 +57,10 @@ export const applyCoupon = async (authtoken, coupon) =>
       },
     }
   );
+
+  export const getUserOrders = async (authtoken) =>
+  await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
+    headers: {
+      authtoken,
+    },
+  });
