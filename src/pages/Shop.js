@@ -7,7 +7,12 @@ import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox } from "antd";
-import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
+import Star from "../components/forms/Star";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -16,8 +21,9 @@ const Shop = () => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
   const [ok, setOk] = useState(false);
-  const [categories, setCategories] = useState([]);  // populates the side menu
-  const [categoryIds, setCategoryIds] = useState([]);  // used to be sent to the back end to peform the search query
+  const [categories, setCategories] = useState([]);
+  const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState("");
 
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
@@ -47,9 +53,6 @@ const Shop = () => {
   useEffect(() => {
     const delayed = setTimeout(() => {
       fetchProducts({ query: text });
-      if (!text) {
-        loadAllProducts();
-      }
     }, 300);
     return () => clearTimeout(delayed);
   }, [text]);
@@ -58,17 +61,20 @@ const Shop = () => {
   useEffect(() => {
     console.log("ok to request");
     fetchProducts({ price });
-  }, [ok]);  // using timeout to reduce backend calls
+  }, [ok]);
 
   const handleSlider = (value) => {
     dispatch({
       type: "SEARCH_QUERY",
-      payload: { text: "" },  // removes existing search query from redux state
+      payload: { text: "" },
     });
+
+    // reset
     setCategoryIds([]);
     setPrice(value);
+    setStar("");
     setTimeout(() => {
-      setOk(!ok);  // change bool every 300 ms to make fetchProducts call
+      setOk(!ok);
     }, 300);
   };
 
@@ -82,7 +88,7 @@ const Shop = () => {
           className="pb-2 pl-4 pr-4"
           value={c._id}
           name="category"
-          checked={categoryIds.includes(c._id)}  // check if the category in the state includes the given category id - true/false
+          checked={categoryIds.includes(c._id)}
         >
           {c.name}
         </Checkbox>
@@ -90,16 +96,16 @@ const Shop = () => {
       </div>
     ));
 
-    // handle check for categories
+  // handle check for categories
   const handleCheck = (e) => {
+    // reset
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
     setPrice([0, 0]);
+    setStar("");
     // console.log(e.target.value);
-
-    // next few lines ensures we don't send duplicate categoryId's to the backend
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
     let foundInTheState = inTheState.indexOf(justChecked); // index or -1
@@ -114,8 +120,31 @@ const Shop = () => {
 
     setCategoryIds(inTheState);
     // console.log(inTheState);
-    fetchProducts({ category: inTheState });  // make the call without the duplicates
+    fetchProducts({ category: inTheState });
   };
+
+  // 5. show products by star rating
+  const handleStarClick = (num) => {
+    // console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(num);
+    fetchProducts({ stars: num });
+  };
+
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
 
   return (
     <div className="container-fluid">
@@ -124,7 +153,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu defaultOpenKeys={["1", "2"]} mode="inline">
+          <Menu defaultOpenKeys={["1", "2", "3"]} mode="inline">
             {/* price */}
             <SubMenu
               key="1"
@@ -156,6 +185,18 @@ const Shop = () => {
               }
             >
               <div style={{ maringTop: "-10px" }}>{showCategories()}</div>
+            </SubMenu>
+
+            {/* stars */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Rating
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showStars()}</div>
             </SubMenu>
           </Menu>
         </div>
