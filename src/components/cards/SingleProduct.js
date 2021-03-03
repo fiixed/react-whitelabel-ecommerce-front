@@ -72,7 +72,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             {description && description}
           </TabPane>
           <TabPane tab="More" key="2">
-            Call use on xxxx xxx xxx to learn more about this product.
+            Call us on xxxx xxx xxx to learn more about this product.
           </TabPane>
         </Tabs>
       </div>
